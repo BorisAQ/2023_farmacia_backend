@@ -1,0 +1,35 @@
+const express = require('express');
+const { check } = require('express-validator');
+const messageControllers = require('../controllers/message-controller');
+const checkAuth = require ('../middleware/check-auth');
+const router = express.Router();
+
+router.get('/:mid', messageControllers.getMessageById);
+router.get('/user/:uid', messageControllers.getMessagesByUserId);
+router.use(checkAuth);//protege los siguientes
+
+router.post(
+  '/',
+  [
+    check('title')
+      .not()
+      .isEmpty(),
+    check('description').isLength({ min: 5 })
+  ],
+  messageControllers.createMessage
+);
+
+router.patch(
+  '/:mid',
+  [
+    check('title')
+      .not()
+      .isEmpty(),
+    check('description').isLength({ min: 5 })
+  ],
+  messageControllers.updateMessage
+);
+
+router.delete('/:mid', messageControllers.deleteMessage);
+
+module.exports = router;
