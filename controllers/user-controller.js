@@ -12,7 +12,7 @@ const getUsers =async(req,res,next)=>{
         users = await User.find ({},'-password');        
     }catch (err){
         error = new HttpError(
-            'Could not find any user, failed please try again later',
+            'Could not find any user, failed please try again later!',
             500
         )
         return next (error)
