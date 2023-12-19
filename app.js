@@ -20,7 +20,7 @@ app.use((req, res, next) => {
   next();
 });
 app.get ("/", (req,res)=>{
-  const htmlResponse =`<html><head></head><body><h1>Hola Mundo</h1></body></html>`
+  const htmlResponse =`<html><head></head><body><h1>Hola Mundo1</h1></body></html>`
   res.send (htmlResponse);
 });
 
