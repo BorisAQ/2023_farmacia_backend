@@ -19,6 +19,10 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
   next();
 });
+app.get ("/", (req,res)=>{
+  const htmlResponse =`<html><head></head><body><h1>Hola Mundo</h1></body></html>`
+  res.send (htmlResponse);
+});
 
 app.use('/api/messages', messagesRoutes);
 app.use('/api/users', usersRoutes);
