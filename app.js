@@ -1,4 +1,4 @@
-const gv= require('dotenv').config();
+//const gv= require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -24,7 +24,7 @@ app.get ("/", (req,res)=>{
   res.send (htmlResponse);
 });
 
-/*
+
 
 app.use('/api/messages', messagesRoutes);
 app.use('/api/users', usersRoutes);
@@ -42,8 +42,6 @@ app.use((error, req, res, next) => {
   res.json({ message: error.message || 'An unknown error occurred!' });
 });
 
-*/
-/*
 mongoose
   .connect(
   `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.ooupxxs.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
@@ -53,5 +51,5 @@ mongoose
   })
   .catch(err => {
     console.log(err);
-  });*/
+  });
 module.exports = app;
