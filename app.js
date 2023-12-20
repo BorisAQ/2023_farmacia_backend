@@ -24,6 +24,8 @@ app.get ("/", (req,res)=>{
   res.send (htmlResponse);
 });
 
+
+/*
 app.use('/api/messages', messagesRoutes);
 app.use('/api/users', usersRoutes);
 app.use((req, res, next) => {
@@ -50,3 +52,5 @@ mongoose
   .catch(err => {
     console.log(err);
   });
+*/
+app.listen(3000, () => console.log('Example app is listening on port 3000.'));
