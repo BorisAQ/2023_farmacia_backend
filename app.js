@@ -24,7 +24,7 @@ app.get ("/", (req,res)=>{
   res.send (htmlResponse);
 });
 
-
+/*
 
 app.use('/api/messages', messagesRoutes);
 app.use('/api/users', usersRoutes);
@@ -41,6 +41,8 @@ app.use((error, req, res, next) => {
   res.status(error.code || 500);
   res.json({ message: error.message || 'An unknown error occurred!' });
 });
+
+*/
 /*
 mongoose
   .connect(
