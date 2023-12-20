@@ -9,7 +9,7 @@ const HttpError = require('./models/http-error');
 //  x= require('dotenv').config();
 const app = express();
 app.use(bodyParser.json());
-
+/*
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', `${process.env.ORIGIN}`);
   res.setHeader(
@@ -18,7 +18,7 @@ app.use((req, res, next) => {
   );
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
   next();
-});
+});*/
 app.get ("/", (req,res)=>{
   const htmlResponse =`<html><head></head><body><h1>Hola Mundo1</h1></body></html>`
   res.send (htmlResponse);
