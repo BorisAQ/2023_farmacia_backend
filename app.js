@@ -41,7 +41,7 @@ app.use((error, req, res, next) => {
   res.status(error.code || 500);
   res.json({ message: error.message || 'An unknown error occurred!' });
 });
-
+/*
 mongoose
   .connect(
   `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.ooupxxs.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
@@ -51,5 +51,5 @@ mongoose
   })
   .catch(err => {
     console.log(err);
-  });
+  });*/
 module.exports = app;
