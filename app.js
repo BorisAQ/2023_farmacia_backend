@@ -7,7 +7,21 @@ const usersRoutes = require('./routes/user-routes');
 const HttpError = require('./models/http-error');
 
 //  x= require('dotenv').config();
+
 const app = express();
+
+mongoose
+  .connect(
+  `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.ooupxxs.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
+  )
+  .then(() => {
+    app.listen(5000);
+  })
+  .catch(err => {
+    console.log(err);
+  });
+  
+
 app.use(bodyParser.json());
 
 app.use((req, res, next) => {
@@ -42,14 +56,4 @@ app.use((error, req, res, next) => {
   res.json({ message: error.message || 'An unknown error occurred!' });
 });
 
-mongoose
-  .connect(
-  `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.ooupxxs.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
-  )
-  .then(() => {
-    app.listen(5000);
-  })
-  .catch(err => {
-    console.log(err);
-  });
 module.exports = app;
