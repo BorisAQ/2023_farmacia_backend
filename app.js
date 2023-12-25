@@ -1,7 +1,7 @@
 const gv= require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
+//const mongoose = require('mongoose');
 const messagesRoutes = require('./routes/message-routes');
 const usersRoutes = require('./routes/user-routes');
 const HttpError = require('./models/http-error');
