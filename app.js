@@ -10,17 +10,7 @@ const HttpError = require('./models/http-error');
 
 const app = express();
 
-/*mongoose
-  .connect(
-    `mongodb+srv://borisA:45898@cluster0.ooupxxs.mongodb.net/msg?retryWrites=true&w=majority`
-  )
-  .then(() => {
-    app.listen(5000);
-  })
-  .catch(err => {
-    console.log(err);
-  });
-  */
+
 
 app.use(bodyParser.json());
 
@@ -39,7 +29,7 @@ app.get ("/", (req,res)=>{
 });
 
 
-/*
+
 app.use('/api/messages', messagesRoutes);
 app.use('/api/users', usersRoutes);
 app.use((req, res, next) => {
@@ -55,5 +45,17 @@ app.use((error, req, res, next) => {
   res.status(error.code || 500);
   res.json({ message: error.message || 'An unknown error occurred!' });
 });
-*/
+
+
+mongoose
+  .connect(
+    `mongodb+srv://borisA:45898@cluster0.ooupxxs.mongodb.net/msg?retryWrites=true&w=majority`
+  )
+  .then(() => {
+    app.listen(5000);
+  })
+  .catch(err => {
+    console.log(err);
+  });
+
 module.exports = app;
