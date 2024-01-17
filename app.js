@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const messagesRoutes = require('./routes/message-routes');
 const usersRoutes = require('./routes/user-routes');
+const serviciosRoutes = require('./routes/servicio-routes');
 const HttpError = require('./models/http-error');
 
 //  x= require('dotenv').config();
@@ -32,6 +33,7 @@ app.get ("/", (req,res)=>{
 
 app.use('/api/messages', messagesRoutes);
 app.use('/api/users', usersRoutes);
+app.use ('/api/servicios', serviciosRoutes)
 app.use((req, res, next) => {
   const error = new HttpError('Could not find this route.', 404);
   throw error;

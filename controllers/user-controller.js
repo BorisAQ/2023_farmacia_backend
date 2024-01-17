@@ -20,6 +20,23 @@ const getUsers =async(req,res,next)=>{
     res.json({users:users.map(user =>user.toObject({getters:true}))});
 };
 
+
+const getUsersList =async(req,res,next)=>{
+    let users;
+    try{
+        users = await User.find ({},{name:1,_id:1});        
+    }catch (err){
+        error = new HttpError(
+            'Could not find any user, failed please try again later!',
+            500
+        )
+        return next (error)
+    }    
+    res.json({users:users.map(user => ({_id:user._id,  name: user.name, id: user._id}))});
+
+    
+};
+
 const signup = async (req,res,next)=>{
     
     const errors = validationResult(req);
@@ -141,3 +158,4 @@ const login =async (req,res,next)=>{
 exports.getUsers = getUsers;
 exports.signup = signup;
 exports.login = login;
+exports.getUsersList = getUsersList;
