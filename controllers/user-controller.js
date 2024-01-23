@@ -2,9 +2,9 @@
 const {validationResult} = require ('express-validator');
 const bcrypt = require ('bcryptjs');
 const jwt = require ('jsonwebtoken');
-const HttpError = require('../models/http-error')
+const HttpError = require('../models/http-error');
 const User = require ('../models/user');
-
+const Servicio = require ('../models/servicio');
 
 const getUsers =async(req,res,next)=>{
     let users;
@@ -145,11 +145,25 @@ const login =async (req,res,next)=>{
           );
           return next (error);
       }
+    let servicio;
+    try{
+        
+        servicio = await Servicio.find({usuarios: existingUser.id})
+            .select ({"name":1});
+    }  catch (err){
+        error = new HttpError(
+            'El usuario no está asignado a ningún servicio', 500
+          );
+          return next (error);
+    }
+    
     res.json({
         userId: existingUser.id,
         email: existingUser.email,
-        token: token
+        token: token,
+        servicio: servicio[0]
         }
+
         );
 }
 

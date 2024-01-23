@@ -2,9 +2,9 @@
 const {validationResult} = require ('express-validator');
 const bcrypt = require ('bcryptjs');
 const jwt = require ('jsonwebtoken');
-const HttpError = require('../models/http-error')
+const HttpError = require('../models/http-error');
 const Servicio = require ('../models/servicio');
-
+const Prestacion = require ('../models/prestacion');
 
 const getServicios =async(req,res,next)=>{
     let servicios;
@@ -26,8 +26,9 @@ const getServicios =async(req,res,next)=>{
 const getServicioById = async (req, res, next) => {
     const servicioId = req.params.sid;
     let servicio;
-    try {
-        servicio = await Servicio.findById(servicioId).populate({path:'usuarios', select:['id', 'name']});        
+    let prestaciones;
+       try {
+        servicio = await Servicio.findById(servicioId).populate({path:'usuarios', select:['id', 'name']})          
     } catch (err) {
       const error = new HttpError(
         'Something went wrong, could not find a service.',
@@ -42,7 +43,19 @@ const getServicioById = async (req, res, next) => {
       );
       return next(error);
     }
-    res.json({ servicio: servicio.toObject({ getters: true }) });
+    try{
+      prestaciones = await Prestacion.find({'servicio': servicioId});
+    }catch(err){
+      const error = new HttpError(
+        'Algo estuvo mal, no se encontraron prestaciones para el servicio.',
+        500
+      );    
+      return next(error);
+    }
+    let serv;
+    serv = servicio.toObject({ getters: true })
+    serv.prestaciones= prestaciones;        
+    res.json({ servicio: serv });
   };
   
  
