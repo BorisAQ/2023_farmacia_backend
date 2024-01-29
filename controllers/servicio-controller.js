@@ -54,7 +54,7 @@ const getServicioById = async (req, res, next) => {
     }
     let serv;
     serv = servicio.toObject({ getters: true })
-    serv.prestaciones= prestaciones;        
+    serv.prestaciones=     prestaciones;        
     res.json({ servicio: serv });
   };
   
