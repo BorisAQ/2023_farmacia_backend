@@ -6,6 +6,7 @@ const HttpError = require('../models/http-error');
 const User = require ('../models/user');
 const Servicio = require ('../models/servicio');
 const Prestacion = require ('../models/prestacion');
+const Actualizacion = require ('../models/actualizacion');
 const getUsers =async(req,res,next)=>{
     let users;
     try{
@@ -157,16 +158,25 @@ const login =async (req,res,next)=>{
           return next (error);
     }
     const servicioId= servicio[0].id;
-        try{
-            prestaciones = await Prestacion.find ({servicio:servicioId});        
-        }catch (err){
-            error = new HttpError(
-                'Could not find any prestacion, failed please try again later!',
-                500
-            )
-            return next (error)
-        }    
-        
+    try{
+        prestaciones = await Prestacion.find ({servicio:servicioId});        
+    }catch (err){
+        error = new HttpError(
+        'Could not find any prestacion, failed please try again later!',
+        500
+        )
+        return next (error)
+    }    
+    let actualizacion;
+    try{
+        actualizacion = await Actualizacion.findOne ({});        
+    }catch (err){
+        error = new HttpError(
+        'Could not find any prestacion, failed please try again later!',
+        500
+        )
+        return next (error)
+    }    
     
     
     res.json({
@@ -175,7 +185,9 @@ const login =async (req,res,next)=>{
         email: existingUser.email,
         token: token,
         servicio: servicio[0],
-        prestaciones: prestaciones? prestaciones.map (prestacion => ({'value':prestacion._id, 'label': prestacion.descripcion, 'costo': prestacion.costo})): null 
+        prestaciones: prestaciones? prestaciones.map (prestacion => ({'value':prestacion._id, 'label': prestacion.descripcion, 'costo': prestacion.costo})): null ,
+        fechaActualizacionPoblacion: actualizacion.fechaActualizacion
+
         }
 
         );

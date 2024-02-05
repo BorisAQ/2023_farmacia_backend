@@ -8,8 +8,9 @@ const router = express.Router();
 
 
 router.use(checkAuth);//protege los siguientes
-
+router.get('/busqueda/:expresion', personaController.getPersonasFilterName);
 router.get('/', personaController.getPersonas);
+
 
 
 router.post(

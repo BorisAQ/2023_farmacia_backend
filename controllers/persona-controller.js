@@ -13,9 +13,28 @@ const getPersonas =async(req,res,next)=>{
         )
         return next (error)
     }    
+
     res.json({personas: personas.map(persona =>persona.toObject({getters:true}))});
 };
  
+
+const getPersonasFilterName =async(req,res,next)=>{
+
+  const expresion = req.params.expresion;
+  let personas;
+  try{
+      personas = await Persona.find ({apellidosNombres: new RegExp (expresion, 'i')});        
+  }catch (err){
+      error = new HttpError(
+          'Could not find any user, failed please try again later!',
+          500
+      )
+      return next (error)
+  }    
+
+  res.json({personas: personas.map(persona =>persona.toObject({getters:true}))});
+};
+
   const createPersona = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -45,3 +64,4 @@ const getPersonas =async(req,res,next)=>{
   };
 exports.getPersonas = getPersonas;
 exports.createPersona = createPersona;
+exports.getPersonasFilterName = getPersonasFilterName;
