@@ -1,4 +1,4 @@
-
+  
 const {validationResult} = require ('express-validator');
 const HttpError = require('../models/http-error');
 
@@ -9,15 +9,24 @@ const Receta = require ('../models/receta');
 
 const getRecetasByService =async(req,res,next)=>{
     let recetas;
+
     const servicioId = req.params.sid;
     try{
-        recetas = await Receta.find ({servicio:servicioId})
+      //console.log (req.headers.fechainicial.substring(0,10))    ;
+      //console.log (req.headers.fechafinal.substring(0,10))    ;
+   
+        //recetas = await Receta.find ({servicio:servicioId, fecha: {$gte: new Date(req.headers.fechainicial.substring(0,10)),$lte: new Date(req.headers.fechafinal.substring(0,10))}})
+        const fechainicial = req.query.fechainicial;
+        const fechafinal = req.query.fechafinal;
+        console.log (fechainicial)
+        console.log (fechafinal)
+        recetas = await Receta.find ({servicio:servicioId, fecha: {$gte: new Date(fechainicial.substring(0,10)),$lte: new Date(fechafinal.substring(0,10))}})
               .populate ({path: 'persona', select :['apellidosNombres', 'matricula']})  
               .populate ({path: 'usuario', select : ['name']})
               .populate ({path: 'medicamentos.medicamento', select : ['descripcion','costo']});        
     }catch (err){
         error = new HttpError(
-            'No se ha podido encontrar recetas para el servicio.',
+            `No se ha podido encontrar recetas para el servicio. ${err}`,
             500
         )
         return next (error)
@@ -61,7 +70,7 @@ const getRecetaById = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return next(
-        new HttpError('Invalid inputs passed, please check your data.', 422)
+        new HttpError('No se ha podido ingresar la receta, revisa que exista un nombre y por lo menos un medicamento.', 422)
       );
     }
     const { servicio, fecha, usuario, medicamentos, persona } = req.body;
@@ -77,7 +86,7 @@ const getRecetaById = async (req, res, next) => {
       await createdReceta.save();            
     } catch (err) {
       const error = new HttpError(
-        'Se ha producido un fallo en el registro de la receta',
+        'No se ha podido ingresar la receta, revisa que exista un nombre y por lo menos un medicamento.',
         500
       );
       return next(error);

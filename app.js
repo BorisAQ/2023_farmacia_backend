@@ -8,6 +8,7 @@ const serviciosRoutes = require('./routes/servicio-routes');
 const PrestacionRoutes = require('./routes/prestacion-routes');
 const PersonaRoutes = require ('./routes/persona-routes');
 const RecetaRoutes = require ('./routes/receta-routes');
+const UtilitariosRoutes = require ('./routes/utilitarios-routes');
 const ActualizacionRoutes = require ('./routes/actualizacion-routes');
 const HttpError = require('./models/http-error');
 
@@ -37,11 +38,12 @@ app.get ("/", (req,res)=>{
 
 app.use('/api/messages', messagesRoutes);
 app.use('/api/users', usersRoutes);
-app.use ('/api/servicios', serviciosRoutes)
-app.use ('/api/prestacion', PrestacionRoutes)
-app.use ('/api/personas', PersonaRoutes)
-app.use ('/api/recetas', RecetaRoutes)
-app.use ('/api/actualizacion', ActualizacionRoutes)
+app.use ('/api/servicios', serviciosRoutes);
+app.use ('/api/prestacion', PrestacionRoutes);
+app.use ('/api/personas', PersonaRoutes);
+app.use ('/api/recetas', RecetaRoutes);
+app.use ('/api/actualizacion', ActualizacionRoutes);
+app.use ('/api/utilitarios', UtilitariosRoutes);
 app.use((req, res, next) => {
   const error = new HttpError('Could not find this route.', 404);
   throw error;
@@ -61,12 +63,9 @@ mongoose
   .connect(
     `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.ooupxxs.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`,
     { useNewUrlParser: true ,
-      useUnifiedTopology: true }
-    
-    
-    
+      useUnifiedTopology: true }            
   )
-  .then(() => {
+  .then(() => {    
     app.listen(5000);
   })
   .catch(err => {
