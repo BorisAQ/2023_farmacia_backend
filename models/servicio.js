@@ -4,9 +4,7 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
     name: {type: String, required:true},
-    codigoSistema: {type: Number, required:true},
-    usuarios: [{type:mongoose.Types.ObjectId, 
-        required:true, ref:'User'}]
+    codigoSistema: {type: Number, required:true}    
 });
 
 userSchema.plugin (uniqueValidator);

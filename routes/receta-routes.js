@@ -15,7 +15,8 @@ router.post(
     check ('persona').not().isEmpty(),
     check ('medicamentos').not().isEmpty(),
     check ('fecha').not().isEmpty().toDate(),
-    check ('usuario').not().isEmpty()    
+    check ('usuario').not().isEmpty()   ,
+    check('desactivado').not().isEmpty() 
   ],
   recetaController.createReceta
 );

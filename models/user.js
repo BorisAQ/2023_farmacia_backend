@@ -5,10 +5,10 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
     name: {type: String, required:true},
     email: {type: String, required:true, unique: true},
-    password : {type:String, required:true, minLength: 6},    
-    messages: [{type:mongoose.Types.ObjectId, 
-    required:true, ref:'Message'}]
-   
+    password : {type:String, required:true, minLength: 6},        
+    rol: {type: Number, default:0},
+    servicioId: {type: Number, required: true} ,  
+    codigoSistema:{type:Number}
 });
 
 userSchema.plugin (uniqueValidator);

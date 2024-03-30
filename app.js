@@ -10,6 +10,7 @@ const PersonaRoutes = require ('./routes/persona-routes');
 const RecetaRoutes = require ('./routes/receta-routes');
 const UtilitariosRoutes = require ('./routes/utilitarios-routes');
 const ActualizacionRoutes = require ('./routes/actualizacion-routes');
+const LoginRoutes = require ('./routes/login-routes');
 const HttpError = require('./models/http-error');
 
 //  x= require('dotenv').config();
@@ -35,7 +36,7 @@ app.get ("/", (req,res)=>{
 });
 
 
-
+app.use('/api/login', LoginRoutes);
 app.use('/api/messages', messagesRoutes);
 app.use('/api/users', usersRoutes);
 app.use ('/api/servicios', serviciosRoutes);
